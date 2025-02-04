@@ -2,27 +2,30 @@
 </script>
 
 <template>
-  <Toolbar class="m-0.5 ps-1 pe-1" style="padding-bottom: 0px; padding-top: 0px;">
+  <Toolbar class="m-1 p-1" style="padding: 0">
     <template #start>
-      <NuxtLink to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="/images/YouBase.png" width="100px" height="100px" alt="">
-        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">YouBase</span>
+      <NuxtLink to="/" class="flex items-center rtl:space-x-reverse">
+        <div class="flex items-center gap-2">
+          <img src="/images/YouBase.png" alt="" width="60px" height="60px" />
+        </div>
+        <span>YouBase</span>
       </NuxtLink>
+
     </template>
     <template #center>
       <IconField>
         <InputIcon>
           <i class="pi pi-search" />
         </InputIcon>
-        <InputText placeholder="Search" size="large"/>
+        <InputText placeholder="Search" />
       </IconField>
-    </template>
 
+    </template>
     <template #end>
-      <Avatar class="m-1" size="large" shape="circle" image="/images/ava.png" />
-      <NuxtLink  to="/chats">
-        <Button label="Log Out"/>
-      </NuxtLink>
+      <div class="flex items-center gap-2 m-2">
+        <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
+        <UButton >Log Out</UButton>
+      </div>
     </template>
   </Toolbar>
 </template>

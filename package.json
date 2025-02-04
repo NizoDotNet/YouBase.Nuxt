@@ -20,5 +20,13 @@
   },
   "devDependencies": {
     "@primevue/nuxt-module": "^4.2.5"
+  },
+  "overrides": {
+    "@nuxtjs/auth-next": {
+      "axios": "$axios",
+      "@nuxtjs/axios": {
+        "axios": "$axios"
+      }
+    }
   }
 }
