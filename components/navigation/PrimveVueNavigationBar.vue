@@ -1,30 +1,30 @@
 <script setup lang="ts">
-const items = ref([])
 </script>
 
 <template>
-  <Menubar :model="items">
+  <Toolbar class="m-0.5 ps-1 pe-1" style="padding-bottom: 0px; padding-top: 0px;">
     <template #start>
-      <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8">
-        <path d="..." fill="var(--p-primary-color)" />
-        <path d="..." fill="var(--p-text-color)" />
-      </svg>
+      <NuxtLink to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="/images/YouBase.png" width="100px" height="100px" alt="">
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">YouBase</span>
+      </NuxtLink>
     </template>
-    <template #item="{ item, props, hasSubmenu, root }">
-      <a v-ripple class="flex items-center" v-bind="props.action">
-        <span>{{ item.label }}</span>
-        <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
-        <span v-if="item.shortcut" class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut }}</span>
-        <i v-if="hasSubmenu" :class="['pi pi-angle-down ml-auto', { 'pi-angle-down': root, 'pi-angle-right': !root }]"></i>
-      </a>
+    <template #center>
+      <IconField>
+        <InputIcon>
+          <i class="pi pi-search" />
+        </InputIcon>
+        <InputText placeholder="Search" size="large"/>
+      </IconField>
     </template>
+
     <template #end>
-      <div class="flex items-center gap-2">
-        <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
-        <Avatar image="/images/avatar/amyelsner.png" shape="circle" />
-      </div>
+      <Avatar class="m-1" size="large" shape="circle" image="/images/ava.png" />
+      <NuxtLink  to="/chats">
+        <Button label="Log Out"/>
+      </NuxtLink>
     </template>
-  </Menubar>
+  </Toolbar>
 </template>
 
 <style scoped>
