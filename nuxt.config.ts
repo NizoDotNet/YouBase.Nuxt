@@ -17,6 +17,20 @@ export default defineNuxtConfig({
   css: [
       'primeicons/primeicons.css'
   ],
+    vite: {
+        server: {
+            strictPort: true,
+            proxy: {
+                "/api": {
+                    target: 'https://localhost:7289',
+                    changeOrigin: true,
+                    secure: false,
+                },
+            },
+        },
+    },
+
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: true }
+  devtools: { enabled: true },
+
 })

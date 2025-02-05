@@ -2,10 +2,11 @@
 import {userStore} from "~/states/userStore";
 
 const uStore = userStore()
+const logOut = async () => await uStore.logOut()
 </script>
 
 <template>
-  <Toolbar class="m-1 p-1" style="padding: 0">
+  <Toolbar class="m-1" style="padding: 0; padding-right: 0.5rem;">
     <template #start>
       <NuxtLink to="/" class="flex items-center rtl:space-x-reverse">
         <div class="flex items-center gap-2">
@@ -25,20 +26,22 @@ const uStore = userStore()
 
     </template>
     <template #end>
-      <div class="flex items-center gap-2 m-2" >
-        <div v-if="uStore.isAuthenticated">
-          <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
-          <UButton >Log Out</UButton>
-        </div>
-        <div v-else>
-          <UButton  class="me-2" >Register</UButton>
-          <NuxtLink to="/auth/login">
-            <UButton color="white">
-              Login
-            </UButton>
-          </NuxtLink>
+      <div v-if="uStore.isAuthenticated" class="flex items-center gap-2 m-2" >
+        <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
+        <UButton @click="logOut">Log Out</UButton>
 
-        </div>
+      </div>
+      <div v-else>
+        <NuxtLink to="/auth/register" class="me-2">
+          <UButton>
+            Register
+          </UButton>
+        </NuxtLink>
+        <NuxtLink to="/auth/login">
+          <UButton color="white">
+            Log In
+          </UButton>
+        </NuxtLink>
       </div>
     </template>
   </Toolbar>

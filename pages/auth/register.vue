@@ -1,64 +1,52 @@
 <script setup lang="ts">
-import {userStore} from "~/states/userStore";
 
-const uStore = userStore()
-const loginData = reactive({
-  email: "",
-  password: ""
-})
-const logData = () => console.log(loginData);
-const login = async () => {
-  await uStore.loginUser(loginData)
-}
 </script>
 
 <template>
-  <div class="login-container">
+  <div class="register-container">
     <div class="form-container">
-      <form @submit.prevent>
+      <h1>
+        Register
+      </h1>
+      <form id="registerForm">
         <div class="input-group">
-          <label for="username">Username</label>
-          <input v-model="loginData.email" type="email" id="username" placeholder="Enter your username" required>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="input-group">
+          <label for="surname">Surname</label>
+          <input type="text" id="surname" placeholder="Enter your surname" required>
+        </div>
+        <div class="input-group">
+          <label for="birthdate">Birth Date (Optional)</label>
+          <input type="date" id="birthdate">
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
         </div>
         <div class="input-group">
           <label for="password">Password</label>
           <div class="password-container">
-            <input v-model="loginData.password" type="password" id="password" placeholder="Enter your password" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
             <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePasswordVisibility()"></i>
           </div>
         </div>
-        <button @click="login" type="submit" class="btn">Login</button>
+        <div class="input-group">
+          <label for="repeatPassword">Repeat Password</label>
+          <div class="password-container">
+            <input type="password" id="repeatPassword" placeholder="Repeat your password" required>
+            <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePasswordVisibility('repeatPassword')"></i>
+          </div>
+        </div>
+        <button type="submit" class="btn">Register</button>
       </form>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Genel stil */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #102C57, #1E3A5C, #345774); /* Koyu tonlarda gradient */
-  background-size: 400% 400%;
-  animation: gradientAnimation 8s ease-in-out infinite;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: #ffffff;
-}
-
-@keyframes gradientAnimation {
-  0% { background-position: 0% 50%; }
-  25% { background-position: 50% 50%; }
-  50% { background-position: 100% 50%; }
-  75% { background-position: 50% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Login container */
-.login-container {
+.register-container {
   width: 400px;
   background-color: #ffffff; /* Beyaz arka plan */
   padding: 40px 50px;
@@ -79,7 +67,7 @@ body {
   display: inline-block;
   width: 30px;
   height: 30px;
-  margin-right: 10px; /* Login yazısı ile logo arasındaki mesafe */
+  margin-right: 10px; /* Register yazısı ile logo arasındaki mesafe */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Gölge efekti */
 }
 
@@ -122,7 +110,6 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Şifre alanı için özel stil */
 .password-container {
   position: relative;
   display: flex;
@@ -148,7 +135,6 @@ body {
   opacity: 1;
 }
 
-/* Giriş butonu */
 .btn {
   width: 100%;
   padding: 15px;
@@ -165,7 +151,6 @@ body {
   background-color: #1E3A5C;
 }
 
-/* Animasyonlar */
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
