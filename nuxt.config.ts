@@ -4,7 +4,8 @@ import Aura from '@primevue/themes/aura';
 export default defineNuxtConfig({
   modules: [
       '@nuxt/ui',
-      "@primevue/nuxt-module"
+      "@primevue/nuxt-module",
+      "@pinia/nuxt"
   ],
   primevue: {
     options: {

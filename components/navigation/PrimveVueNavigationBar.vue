@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {userStore} from "~/states/userStore";
+
+const uStore = userStore()
 </script>
 
 <template>
@@ -22,9 +25,20 @@
 
     </template>
     <template #end>
-      <div class="flex items-center gap-2 m-2">
-        <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
-        <UButton >Log Out</UButton>
+      <div class="flex items-center gap-2 m-2" >
+        <div v-if="uStore.isAuthenticated">
+          <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
+          <UButton >Log Out</UButton>
+        </div>
+        <div v-else>
+          <UButton  class="me-2" >Register</UButton>
+          <NuxtLink to="/auth/login">
+            <UButton color="white">
+              Login
+            </UButton>
+          </NuxtLink>
+
+        </div>
       </div>
     </template>
   </Toolbar>

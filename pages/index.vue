@@ -3,9 +3,6 @@
 </script>
 
 <template>
-  <div class="alert container m-4">
-    <Button />
-  </div>
 
 </template>
 
