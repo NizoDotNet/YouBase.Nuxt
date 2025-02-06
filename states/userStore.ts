@@ -7,7 +7,7 @@ export  const userStore = defineStore('user', () =>{
     const user = reactive(userObject);
     const isAuthenticated = ref(false);
     const router = useRouter()
-
+    const isLoading = ref(false)
     async function loginUser(loginData: object) {
         try {
             await $fetch('/api/auth/login', {
@@ -19,6 +19,7 @@ export  const userStore = defineStore('user', () =>{
                 credentials: 'include'
             });
             await getUser()
+            await router.push('/');
         } catch (e) {
             console.log(e)
         }
@@ -26,14 +27,16 @@ export  const userStore = defineStore('user', () =>{
 
     async function getUser() {
         try {
-            const {data} = await useFetch<UserInterface>('/api/users', {
+            isLoading.value = true;
+            const data = await $fetch<UserInterface>('/api/users', {
                 method: 'GET',
             })
-            userObject.value = {...data.value!}
+            userObject.value = {...data}
             isAuthenticated.value = true;
-            await router.push('/')
         } catch (e) {
             console.log(e)
+        } finally {
+            isLoading.value = false;
         }
 
     }
@@ -48,5 +51,5 @@ export  const userStore = defineStore('user', () =>{
             console.log(e)
         }
     }
-    return { user, loginUser, isAuthenticated, getUser, logOut }
+    return { user, loginUser, isAuthenticated, getUser, logOut, isLoading }
 });
