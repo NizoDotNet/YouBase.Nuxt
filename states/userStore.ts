@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import type {UserInterface} from "~/interfaces/userInterface";
+import router from "#app/plugins/router";
 
 export  const userStore = defineStore('user', () =>{
     const userObject = ref<UserInterface>();
@@ -31,6 +32,7 @@ export  const userStore = defineStore('user', () =>{
             if(user !== undefined) {
                 isAuthenticated.value = true;
                 userObject.value = {...user};
+
             }
         } catch (e) {
             console.log(e)
