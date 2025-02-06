@@ -27,7 +27,7 @@ const logOut = async () => await uStore.logOut()
     </template>
     <template #end>
       <div v-if="uStore.isAuthenticated" class="flex items-center gap-2 m-2" >
-        <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
+        <Avatar :image="uStore.user?.avatarUrl" style="width: 64px; height: 64px" />
         <UButton @click="logOut">Log Out</UButton>
 
       </div>

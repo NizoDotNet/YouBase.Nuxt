@@ -2,18 +2,13 @@ import {defineStore} from "pinia";
 import type {UserInterface} from "~/interfaces/userInterface";
 
 export  const userStore = defineStore('user', () =>{
-    const userObject = ref({
-        id: "",
-        email: "",
-        userName: "",
-        nickname: "",
-    });
+    const userObject = ref<UserInterface>();
     const user = reactive(userObject);
     const isAuthenticated = ref(false);
 
     async function loginUser(loginData: object) {
         try {
-            const res = await $fetch('/api/auth/login', {
+            await $fetch('/api/auth/login', {
                 method: 'POST',
                 body: loginData,
                 headers: {
@@ -48,12 +43,7 @@ export  const userStore = defineStore('user', () =>{
                 method: 'GET',
             })
             isAuthenticated.value = false;
-            userObject.value = {
-                id: "",
-                email: "",
-                userName: "",
-                nickname: "",
-            };
+            userObject.value = undefined;
         } catch (e) {
             console.log(e)
         }
