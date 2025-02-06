@@ -2,7 +2,9 @@
 import {userStore} from "~/states/userStore";
 
 const uStore = userStore()
-uStore.getUser()
+onMounted(async () => {
+  await uStore.getUser()
+})
 </script>
 
 <template>

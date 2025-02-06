@@ -10,7 +10,7 @@ let pageSize: number = 10;
 const getPosts = async () => {
   data.value = await postService.getData(pageNumber, pageSize)
 };
-getPosts();
+await getPosts();
 </script>
 
 <template>

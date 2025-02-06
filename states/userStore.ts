@@ -6,6 +6,7 @@ export  const userStore = defineStore('user', () =>{
     const userObject = ref<UserInterface>();
     const user = reactive(userObject);
     const isAuthenticated = ref(false);
+    const router = useRouter()
 
     async function loginUser(loginData: object) {
         try {
@@ -25,15 +26,12 @@ export  const userStore = defineStore('user', () =>{
 
     async function getUser() {
         try {
-            const user = await $fetch<UserInterface>('/api/users', {
+            const {data} = await useFetch<UserInterface>('/api/users', {
                 method: 'GET',
-
             })
-            if(user !== undefined) {
-                isAuthenticated.value = true;
-                userObject.value = {...user};
-
-            }
+            userObject.value = {...data.value!}
+            isAuthenticated.value = true;
+            await router.push('/')
         } catch (e) {
             console.log(e)
         }
