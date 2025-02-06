@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: [
       '@nuxt/ui',
       "@primevue/nuxt-module",
-      "@pinia/nuxt"
+      "@pinia/nuxt",
   ],
   primevue: {
     options: {
@@ -24,6 +24,7 @@ export default defineNuxtConfig({
                 "/api": {
                     target: 'https://localhost:7289',
                     changeOrigin: true,
+                    ws: true,
                     secure: false,
                 },
             },

@@ -3,11 +3,13 @@ import type {UserInterface} from "~/interfaces/userInterface";
 import router from "#app/plugins/router";
 
 export  const userStore = defineStore('user', () =>{
+
     const userObject = ref<UserInterface>();
     const user = reactive(userObject);
     const isAuthenticated = ref(false);
     const router = useRouter()
     const isLoading = ref(false)
+
     async function loginUser(loginData: object) {
         try {
             await $fetch('/api/auth/login', {
@@ -25,6 +27,31 @@ export  const userStore = defineStore('user', () =>{
         }
     }
 
+    async function registerUser(registerData: object) {
+        try {
+            isLoading.value = true
+            await $fetch('/api/auth/register', {
+                method: 'POST',
+                body: registerData,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include'
+            });
+
+            await router.push('/auth/login');
+        } catch (e) {
+            console.log(e)
+        } finally {
+            isLoading.value = false
+        }
+    }
+
+         async function refreshToken() {
+             await $fetch('/api/auth/refresh', {
+                 method: 'GET',
+             });
+         }
     async function getUser() {
         try {
             isLoading.value = true;
@@ -51,5 +78,5 @@ export  const userStore = defineStore('user', () =>{
             console.log(e)
         }
     }
-    return { user, loginUser, isAuthenticated, getUser, logOut, isLoading }
+    return { user, loginUser, isAuthenticated, getUser, logOut, isLoading, registerUser, refreshToken }
 });

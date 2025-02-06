@@ -3,7 +3,10 @@ import {userStore} from "~/states/userStore";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 const uStore = userStore()
 
-await uStore.getUser()
+try {
+  await uStore.getUser()
+} catch (e) {
+}
 
 </script>
 
