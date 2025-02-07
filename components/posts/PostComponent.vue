@@ -8,13 +8,18 @@ const props = defineProps({
 const uStore = userStore()
 const isPostLiked = ref(props.item?.usersWhoLiked.some(c => c.id === uStore.user?.id));
 const postService = usePostService()
+const showFullPost = ref(false)
 
 const like = async () => {
   console.log('like pressed')
   try {
+    const value = await postService.likePost(props.item?.id);
+    if(value) {
+      isPostLiked.value = true;
+      props.item?.usersWhoLiked.push({});
+    }
 
-    await postService.likePost(props.item?.id);
-    isPostLiked.value = true;
+
   } catch (e) {
 
   }
@@ -23,9 +28,12 @@ const like = async () => {
 const disLike = async () => {
   console.log('dislike pressed')
   try {
+    const value = await postService.dislikePost(props.item?.id);
+    if(value) {
+      isPostLiked.value = false;
+      props.item?.usersWhoLiked.pop();
 
-    await postService.dislikePost(props.item?.id);
-    isPostLiked.value = false;
+    }
   } catch (e) {
 
   }
@@ -34,8 +42,8 @@ const disLike = async () => {
 
 <template>
 
-  <Card style="width: 25rem; overflow: hidden">
-    <template #header>
+  <Card class="m-2" style="width: 25rem; overflow: hidden">
+    <template v-if="item?.imageUrl" #header>
       <img alt="user header" :src="item?.imageUrl" />
     </template>
     <template #title>{{ item?.tittle }}</template>
@@ -46,12 +54,15 @@ const disLike = async () => {
     </template>
     <template #footer>
       <div class="flex gap-4 mt-1">
-        <Button @click="like" v-if="!isPostLiked" label="Like" severity="secondary" outlined class="w-full" icon="pi pi-heart"/>
-        <Button @click="disLike" v-else label="Like" severity="secondary" outlined class="w-full" icon="pi pi-heart-fill"/>
+        <Button :label="item?.usersWhoLiked.length" @click="like" v-if="!isPostLiked" label="Like" severity="secondary" outlined class="w-full" icon="pi pi-heart"/>
+        <Button :label="item?.usersWhoLiked.length" @click="disLike" v-else label="Like" severity="secondary" outlined class="w-full" icon="pi pi-heart-fill"/>
       </div>
     </template>
   </Card>
-
+  <button @click="showFullPost = !showFullPost">show</button>
+  <div v-if="showFullPost">
+    <PostsFullPostComponent :post="item"/>
+  </div>
 </template>
 
 <style scoped>

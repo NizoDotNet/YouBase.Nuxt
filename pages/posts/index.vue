@@ -15,7 +15,7 @@ await getPosts();
 
 <template>
   <div class="flex flex-col items-center">
-    <PostsPostComponent class="m-2" v-for="item in data?.items" :item="item"/>
+    <PostsPostComponent v-for="item in data?.items" :item="item"/>
   </div>
 </template>
 

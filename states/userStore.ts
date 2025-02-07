@@ -47,11 +47,17 @@ export  const userStore = defineStore('user', () =>{
         }
     }
 
-         async function refreshToken() {
-             await $fetch('/api/auth/refresh', {
-                 method: 'GET',
-             });
+     async function refreshToken() {
+         const {data, error} = await useFetch('/api/auth/refresh', {
+             method: 'GET',
+             server: false,
+             credentials: "include"
+         });
+         if(!error.value) {
+             window.location.reload()
          }
+
+     }
     async function getUser() {
         try {
             isLoading.value = true;
@@ -62,6 +68,7 @@ export  const userStore = defineStore('user', () =>{
             isAuthenticated.value = true;
         } catch (e) {
             console.log(e)
+            await refreshToken()
         } finally {
             isLoading.value = false;
         }
@@ -74,9 +81,10 @@ export  const userStore = defineStore('user', () =>{
             })
             isAuthenticated.value = false;
             userObject.value = undefined;
+            window.location.reload()
         } catch (e) {
             console.log(e)
         }
     }
-    return { user, loginUser, isAuthenticated, getUser, logOut, isLoading, registerUser, refreshToken }
+    return { user, loginUser, isAuthenticated, getUser, logOut, isLoading, registerUser }
 });
