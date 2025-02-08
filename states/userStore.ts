@@ -54,18 +54,25 @@ export  const userStore = defineStore('user', () =>{
              credentials: "include"
          });
          if(!error.value) {
-             window.location.reload()
          }
 
      }
     async function getUser() {
         try {
             isLoading.value = true;
-            const data = await $fetch<UserInterface>('/api/users', {
+            const {data, error} = await useFetch<UserInterface>('/api/users', {
                 method: 'GET',
+                credentials: 'include',
+                server: false,
             })
-            userObject.value = {...data}
-            isAuthenticated.value = true;
+            if(!error.value && data.value !== null) {
+                userObject.value = {...data.value!}
+                isAuthenticated.value = true;
+            }
+            else {
+                await refreshToken()
+            }
+
         } catch (e) {
             console.log(e)
             await refreshToken()
@@ -78,6 +85,7 @@ export  const userStore = defineStore('user', () =>{
         try {
             await $fetch<UserInterface>('/api/auth/logout', {
                 method: 'GET',
+                credentials: "include"
             })
             isAuthenticated.value = false;
             userObject.value = undefined;
